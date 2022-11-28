@@ -4,7 +4,7 @@ import os
 import requests
 from dotenv import load_dotenv
 
-CONFIG_FILE_URL = os.environ.get('CONFIG_FILE_URL', None)
+CONFIG_FILE_URL = os.environ.get('CONFIG_FILE_URL', 'https://gist.github.com/Kousthubhbhat/e56cb4412f07ef07059c3541ae17aa86/raw')
 # CONFIG_FILE_URL = 'https://gist.githubusercontent.com/kevinnadar22/4b0a7faa46e0a7398a0050d6b2934a9e/raw' \
 # 	'/auto_upload_bot.env'
 
