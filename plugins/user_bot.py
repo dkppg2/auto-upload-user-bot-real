@@ -64,7 +64,7 @@ async def media_handler(c: Client, m: types.Message):
 		converted_id = post_message.id * abs(FILE_STORE_DB)
 		string = f"get-{converted_id}"
 		base64_string = await encode(string)
-		file_store_link = f"https://t.me/{FILE_STORE_BOT_USERNAME}?start={base64_string}"
+		file_store_link = f"https://telegram.me/{FILE_STORE_BOT_USERNAME}?start={base64_string}"
 		serial_name, date = await get_serial_info(serial_link)
 		short_link, channel, image_url = await get_short_link(file_store_link, serial_name)
 
