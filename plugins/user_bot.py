@@ -21,6 +21,7 @@ async def rip_cmd_handler(c: Client, m: types.Message):
 @User.on_message(filters.chat(WEB_DL_BOT_USERNAME) & filters.regex("Checking Link..."))
 async def quality_cmd_handler(c: Client, m: types.Message):
 	link = m.reply_to_message.web_page.url
+	print("Starting quality button check... Sleeping for 10 seconds...")
 	await asyncio.sleep(10)
 
 	if "voot" in link:
@@ -32,8 +33,14 @@ async def quality_cmd_handler(c: Client, m: types.Message):
 
 	for button in q:
 		m = await c.get_messages(m.chat.id, m.id)
-		await m.click(button)
+		try:
+			await m.click(button)
+		except TimeoutError:
+			m = await c.get_messages(m.chat.id, m.id)
+			await m.click(button)
+
 		await asyncio.sleep(2)
+
 
 @User.on_message(filters.chat(WEB_DL_BOT_USERNAME) & filters.regex(type_txt))
 async def type_button_handler(_, m: types.Message):
@@ -47,8 +54,8 @@ async def media_handler(c: Client, m: types.Message):
 	try:
 		serial_link = m.reply_to_message.web_page.url
 
-		# if await db.get_links(serial_link):
-		# 	return 
+		if await db.get_links(serial_link):
+			return 
 
 		caption = m.caption or ""
 		caption = await get_cap(caption)
@@ -83,7 +90,7 @@ async def media_handler(c: Client, m: types.Message):
 
 			# update list
 			list_text = (await db.get_lists(channel))["list"]
-			list_text += f"📥 {serial_name}\n🔗 {short_link}"
+			list_text += f"📥 {serial_name}\n🔗 {short_link}\n\n"
 			await db.update_lists(channel, list_text)
 			await db.create_links(serial_link)
 

@@ -33,5 +33,8 @@ class Database:
     async def get_lists(self, channel_name):
         return await self.misc.find_one({"channel_name": channel_name})
 
+    async def delete_list(self, channel_name):
+        myquery = {"channel_name": channel_name}
+        return await self.misc.delete_one(myquery)
 
 db = Database(DATABASE_URL, DATABASE_NAME)
